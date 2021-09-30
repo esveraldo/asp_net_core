@@ -71,6 +71,24 @@ namespace Application
                         Url = new Uri("https://google.com.br")
                     }
                 });
+
+                s.AddSecurityDefinition("Admin", new OpenApiSecurityScheme{
+                    Description = "Entre com o token JWT",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey
+                });
+
+                s.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                    {
+                        new OpenApiSecurityScheme {
+                            Reference = new OpenApiReference{
+                                Id = "Admin",
+                                Type = ReferenceType.SecurityScheme
+                            }
+                        }, new List<string>()
+                    }
+                });
             });
         }
 
