@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Api.Domain.Entities.User;
 using Api.Data.Mapping;
+using System;
 
 namespace Api.Data.Context
 {
@@ -15,6 +16,18 @@ namespace Api.Data.Context
             modelBuilder.Entity<UserEntity>(new UserMap().Configure);
 
             base.OnModelCreating(modelBuilder);
+
+            /*modelBuilder.Entity<UserEntity>().HasData(
+                new UserEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Nome = "Esveraldo M. de Oliveira",
+                    Email = "esveraldo@hotmail.com",
+                    Senha = "123456",
+                    CreatedAt = DateTime.UtcNow,
+                    UpdateAt = DateTime.UtcNow
+                }
+            );*/
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

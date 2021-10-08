@@ -15,6 +15,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Api.CrossCutting.Mappings;
+using AutoMapper;
+using Api.Data.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application
 {
@@ -32,6 +36,16 @@ namespace Application
         {
             ConfigureService.ConfigureDependencyService(services);
             ConfigureRepository.ConfigureDependencyRepository(services);
+
+            var config = new AutoMapper.MapperConfiguration(cfg => 
+            {
+                cfg.AddProfile(new DtoToModelProfile());
+                cfg.AddProfile(new UserEntityToDtoProfile());
+                cfg.AddProfile(new UserModelToEntityProfile());
+            });
+
+            IMapper mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddControllers();
 
@@ -115,6 +129,17 @@ namespace Application
             {
                 endpoints.MapControllers();
             });
+            //CRIAR AS MIGRAÇÕES AUTOMATICAMENTE PARA O BANCO DE DADOS - CRIAR O BANCO DE DADOS PRIMEIRO NA STRING
+            // DE CONEXAO EM LAUNCH.JSON
+            if(Environment.GetEnvironmentVariable("MIGRATION").ToLower() == "APLICAR".ToLower()){
+
+                using(var service = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope()){
+
+                    using(var context = service.ServiceProvider.GetService<ApplicationDbContext>()){
+                        context.Database.Migrate();
+                    }
+                }
+            }
         }
     }
 }

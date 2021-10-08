@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Api.Domain.DTOs;
 using Api.Domain.Entities.User;
 using Api.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -56,7 +57,7 @@ namespace Api.Application.Controllers
 
         [HttpPost]
         [Authorize(Roles="Assistente")]
-        public async Task<ActionResult> Post([FromBody] UserEntity user)
+        public async Task<ActionResult> Post([FromBody] UserCreateDTO user)
         {
             if(!ModelState.IsValid)
                 return BadRequest(new {message="Erro de sintaxe: " + ModelState});
@@ -79,7 +80,7 @@ namespace Api.Application.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] UserEntity user)
+        public async Task<ActionResult> Put([FromBody] UserUpdateDTO user)
         {
             if(!ModelState.IsValid)
                 return BadRequest(new {message="Erro de sintaxe: " + ModelState});
