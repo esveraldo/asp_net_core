@@ -131,7 +131,7 @@ namespace Application
             });
             //CRIAR AS MIGRAÇÕES AUTOMATICAMENTE PARA O BANCO DE DADOS - CRIAR O BANCO DE DADOS PRIMEIRO NA STRING
             // DE CONEXAO EM LAUNCH.JSON
-            if(Environment.GetEnvironmentVariable("MIGRATION").ToLower() == "APLICAR".ToLower()){
+            /*if(Environment.GetEnvironmentVariable("MIGRATION").ToLower() == "APLICAR".ToLower()){
 
                 using(var service = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope()){
 
@@ -139,7 +139,7 @@ namespace Application
                         context.Database.Migrate();
                     }
                 }
-            }
+            }*/
         }
     }
 }

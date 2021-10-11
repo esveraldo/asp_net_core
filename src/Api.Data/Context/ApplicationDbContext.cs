@@ -17,17 +17,18 @@ namespace Api.Data.Context
 
             base.OnModelCreating(modelBuilder);
 
-            /*modelBuilder.Entity<UserEntity>().HasData(
+            modelBuilder.Entity<UserEntity>().HasData(
                 new UserEntity
                 {
                     Id = Guid.NewGuid(),
                     Nome = "Esveraldo M. de Oliveira",
                     Email = "esveraldo@hotmail.com",
                     Senha = "123456",
+                    Role = "Admin",
                     CreatedAt = DateTime.UtcNow,
                     UpdateAt = DateTime.UtcNow
                 }
-            );*/
+            );
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
